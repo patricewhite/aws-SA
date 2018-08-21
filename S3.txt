@@ -1,0 +1,60 @@
+S3 - Simple Storage Service
+    Object based Storage
+        allows file uploads
+        not for OS or applications
+    0 to 5 TB
+    Unlimited Storage
+    Files Stored in Buckets
+        Universal name space (DNS)
+            names have to be uniqe
+            s3-region.aws.com/bucketname 
+    Data Consistency Model
+        Read after writes for PUTS
+            can read imideately after writing
+        Eventual Consistency for overwrite PUTS and DELETES
+            takes time for changes to take affect 
+    Key-Value Store
+        key - name of Object
+        value - data(sequence of bytes)
+        version ID  - important for versioning
+        Metadata 
+        Subresources 
+            Access Control Lists
+            Torrent
+    99.99% avaliablity 
+        Amazon Garuntee (SLA) 99.9% avaliablity
+    Amazon Gaurnetees 11 x 9s durability 
+    Tiered Storage
+        S3 Standard
+            99.99% avaliablity
+            11 X 9s durability
+            stored redudently accross multiple facilities 
+            can sustain loss of 2 facilities concurrently
+        IA - Infrequently Accessed
+            99.9% avaliablity
+            retrvial fee, lower fee than Standard
+            data that is accessed less frequntly
+        One Zone - IA
+            99.5% avaliablity
+            Only stored in one avaliablity Zone
+            lower cost 
+        Glacier 
+            Cheapest Storage
+            for archiving
+            Standard retrevial takes 3-5 hrs
+        Charged for
+            Storage
+            Request
+            Storage Management Pricing
+            Data Transfer Pricing
+            Transfer Accerleration
+                enables fast, easy, and secure transfers of files over long distances between your end users and an s3 bucket
+    Lifecycle Management
+    versioning
+    Encrytion 
+    Secure Data
+        Access control Lists
+        Bucket Policies
+    
+
+    
