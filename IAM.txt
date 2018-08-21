@@ -1,0 +1,23 @@
+Consist of 
+    Users
+    Groups(A way to group our users and apply policies to them collectively)
+    Roles
+    Policy Documents
+        JSON 
+    UNIVERSAL REGION    
+    root is default account
+        admin acces 
+    new users 
+        have no access upon creation 
+        assigned a access key ID and Secret access (NOT PASSWORDS)
+            can be used with API's & Command Line
+            have to be regenerated if forgotten
+    Must set up Multifactor Authentication on root account
+    Can create and customize your own password roation policies
+    
+Quiz
+    There is no biometric option for authentication 
+    Power USer Access allows access ti all AWS services except for management of groups and users within IAM
+    You only need to configure Users and Policy Documents once as they are applied globally
+    Implementing multi-factor Authentication for all accounts is an additional way to sercure IAM for root and new users
+    
