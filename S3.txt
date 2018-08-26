@@ -6,8 +6,8 @@ S3 - Simple Storage Service
     Unlimited Storage
     Files Stored in Buckets
         Universal name space (DNS)
-            names have to be uniqe
-            s3-region.aws.com/bucketname 
+            names have to be uniqe globally
+            s3-region.amazonaws.com/bucketname 
     Data Consistency Model
         Read after writes for PUTS
             can read imideately after writing
@@ -17,27 +17,25 @@ S3 - Simple Storage Service
         key - name of Object
         value - data(sequence of bytes)
         version ID  - important for versioning
-        Metadata 
+        Metadata - info about object
         Subresources 
-            Access Control Lists
+            Access Control Lists (Who can access object)
             Torrent
     99.99% avaliablity 
         Amazon Garuntee (SLA) 99.9% avaliablity
     Amazon Gaurnetees 11 x 9s durability 
     Tiered Storage
         S3 Standard
-            99.99% avaliablity
-            11 X 9s durability
-            stored redudently accross multiple facilities 
-            can sustain loss of 2 facilities concurrently
+            durable
+            immediately avaliable
+            frequently accessed
         IA - Infrequently Accessed
-            99.9% avaliablity
-            retrvial fee, lower fee than Standard
-            data that is accessed less frequntly
+            durable
+            immediately avaliable
+            infrequently accessed
         One Zone - IA
-            99.5% avaliablity
             Only stored in one avaliablity Zone
-            lower cost 
+            lower cost than IA
         Glacier 
             Cheapest Storage
             for archiving
@@ -56,5 +54,6 @@ S3 - Simple Storage Service
         Access control Lists
         Bucket Policies
     
-
+             READ S3 FAQ BEFORE TAKING EXAM************** READ S3 FAQ BEFORE TAKING EXAM************** READ S3 FAQ BEFORE TAKING EXAM**************
     
+    min size of file is 0 bytes
