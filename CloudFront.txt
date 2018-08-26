@@ -1,0 +1,23 @@
+content delivery network (CDN)
+  network that delivers webpages and other web content to a user based on geographic location of user
+  Edge location
+    Location where content will be cached
+    Read and Write
+  Origin
+    origin of all the files the CDN will distribute
+      ex s3 bucket, ec2 instance
+  Distribution
+    name given to the CDN which consist of a collection of edge locations
+    Web Distribution
+      for websites
+    RTMP
+      media streaming
+
+CloudFront
+  Can deliver your entire website using a global network of edge locations
+  Request for content are automatically routed to nearest edge location
+    gets you best possible performance
+  Optimized to work with other aws services
+  Works seamlesly with any non-AWS origin server
+  charged for cleared cached objects
+  objects are cached for TTL
