@@ -7,23 +7,23 @@ S3 - Simple Storage Service
     Files Stored in Buckets
         Universal name space (DNS)
             names have to be uniqe globally
-            s3-region.amazonaws.com/bucketname 
+            s3-region.amazonaws.com/bucketname
     Data Consistency Model
         Read after writes for PUTS
             can read imideately after writing
         Eventual Consistency for overwrite PUTS and DELETES
-            takes time for changes to take affect 
+            takes time for changes to take affect
     Key-Value Store
         key - name of Object
         value - data(sequence of bytes)
         version ID  - important for versioning
         Metadata - info about object
-        Subresources 
+        Subresources
             Access Control Lists (Who can access object)
             Torrent
-    99.99% avaliablity 
+    99.99% avaliablity
         Amazon Garuntee (SLA) 99.9% avaliablity
-    Amazon Gaurnetees 11 x 9s durability 
+    Amazon Gaurnetees 11 x 9s durability
     Tiered Storage
         S3 Standard
             durable
@@ -36,7 +36,7 @@ S3 - Simple Storage Service
         One Zone - IA
             Only stored in one avaliablity Zone
             lower cost than IA
-        Glacier 
+        Glacier
             Cheapest Storage
             for archiving
             Standard retrevial takes 3-5 hrs
@@ -48,12 +48,17 @@ S3 - Simple Storage Service
             Transfer Accerleration
                 enables fast, easy, and secure transfers of files over long distances between your end users and an s3 bucket
     Lifecycle Management
+      automate to tiered storage/retire(delete) object
+      with or without versioning
+      applied to current and previous versions
     versioning
-    Encrytion 
+      can't disable once enabled
+    Encryption
     Secure Data
         Access control Lists
         Bucket Policies
-    
+
              READ S3 FAQ BEFORE TAKING EXAM************** READ S3 FAQ BEFORE TAKING EXAM************** READ S3 FAQ BEFORE TAKING EXAM**************
-    
+
     min size of file is 0 bytes
+    by default buckets and everything in them are private
