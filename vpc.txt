@@ -1,0 +1,21 @@
+VPC (virtual private cloud)
+  logically isolated from other virtual networks in the AWS Cloud
+  You can specify an IP address range for the VPC, add subnets, associate security groups, and configure route tables
+
+subnet
+  range of ip addresses in your vpc
+
+A default VPC has the benefits of the advanced features provided by EC2-VPC, and is ready for you to use. If you have a default VPC and don't specify a subnet when you launch an instance, the instance is launched into your default VPC
+
+Your default VPC includes an internet gateway, and each default subnet is a public subnet
+
+An internet gateway enables your instances to connect to the internet through the Amazon EC2 network edge
+
+You can enable internet access for an instance launched into a nondefault subnet by attaching an internet gateway to its VPC
+
+NAT (network address translation)
+  allows an instance in your VPC to initiate outbound connections to the internet but prevent unsolicited inbound connections from the internet
+
+  A NAT device has an Elastic IP address and is connected to the internet through an internet gateway
+
+  You can connect an instance in a private subnet to the internet through the NAT device, which routes traffic from the instance to the internet gateway, and routes any responses to the instance.
