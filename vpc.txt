@@ -11,6 +11,12 @@ Your default VPC includes an internet gateway, and each default subnet is a publ
 
 An internet gateway enables your instances to connect to the internet through the Amazon EC2 network edge
 
+An internet gateway is a horizontally scaled, redundant, and highly available VPC component that allows communication between instances in your VPC and the internet.
+  two purposes:
+    to provide a target in your VPC route tables for internet-routable traffic
+
+    to perform network address translation (NAT) for instances that have been assigned public IPv4 addresses
+
 You can enable internet access for an instance launched into a nondefault subnet by attaching an internet gateway to its VPC
 
 NAT (network address translation)
@@ -19,3 +25,155 @@ NAT (network address translation)
   A NAT device has an Elastic IP address and is connected to the internet through an internet gateway
 
   You can connect an instance in a private subnet to the internet through the NAT device, which routes traffic from the instance to the internet gateway, and routes any responses to the instance.
+
+A virtual private gateway is the VPN concentrator on the Amazon side of the VPN connection
+
+A customer gateway is a physical device or software appliance on your side of the VPN connection.
+
+Classless Inter-Domain Routing (CIDR) block
+  range of IPv4 or IPv6 addresses for the VPC
+  Ex. 10.0.0.0/16
+
+/16 - CIDR (a network with 65,536 private IP addresses) (For VPC)
+
+/24 - CIDR (a range of 256 private IP addresses) (For subnet)
+
+Security groups - Act as a firewall for associated Amazon EC2 instances, controlling inbound and outbound traffic for your instances
+
+Network ACLs (Access Control Lists) -  Act as a firewall for associated subnets, controlling inbound and outbound traffic for your subnets
+
+Flow logs — Capture information about the IP traffic going to and from network interfaces in your VPC
+
+A NAT gateway with its own Elastic IPv4 address. Instances in the private subnet can send requests to the Internet through the NAT gateway over IPv4 (for example, for software updates).
+
+A custom route table associated with the public subnet.
+  The second entry routes all other subnet traffic to the Internet over the Internet gateway (for example, igw-1a2b3d4d).
+
+The main route table associated with the private subnet.
+  The second entry sends all other subnet traffic to the NAT gateway (for example, nat-12345678901234567)
+
+Route table entries in the main route table that enable instances in the private subnet to use IPv6 to communicate with each other, and to communicate with the Internet through an egress-only Internet gateway.
+
+Any traffic from your network going to an Elastic IP address for an instance in the public subnet goes over the Internet, and not over the virtual private gateway
+
+The VPN connection is configured either as a statically-routed VPN connection or as a dynamically-routed VPN connection (using BGP).
+
+When you create a subnet, you specify the CIDR block for the subnet, which is a subset of the VPC CIDR block.
+
+ Each subnet must reside entirely within one Availability Zone and cannot span zones
+
+ Availability Zones are distinct locations that are engineered to be isolated from failures in other Availability Zones
+
+If a subnet's traffic is routed to an internet gateway, the subnet is known as a public subnet
+
+If a subnet doesn't have a route to the internet gateway, the subnet is known as a private subnet.
+
+If a subnet doesn't have a route to the internet gateway, but has its traffic routed to a virtual private gateway for a VPN connection, the subnet is known as a VPN-only subnet.
+
+By default, all VPCs and subnets must have IPv4 CIDR blocks—you can't change this behavior.
+
+Private IPv4 addresses (also referred to as private IP addresses in this topic) are not reachable over the Internet, and can be used for communication between the instances in your VPC.
+
+By default, nondefault subnets have the IPv4 public addressing attribute set to false, and default subnets have this attribute set to true.
+
+You cannot disable IPv4 support for your VPC and subnets; this is the default IP addressing system for Amazon VPC and Amazon EC2.
+
+Security Group
+  Operates at the instance level
+  Supports allow rules only
+  Is stateful: Return traffic is automatically allowed, regardless of any rules
+  We evaluate all rules before deciding whether to allow traffic
+  Applies to an instance only if someone specifies the security group when launching the instance, or associates the security group with the instance later on
+
+  You can't delete a default security group, but you can change the rules for the default security group.
+
+  A rule applies either to inbound traffic (ingress) or outbound traffic (egress). You can grant access to a specific CIDR range, or to another security group in your VPC or in a peer VPC (requires a VPC peering connection).
+
+Network ACLs
+  Operates at the subnet level
+  Supports allow rules and deny rules
+  Is stateless: Return traffic must be explicitly allowed by rules
+  We process rules in number order when deciding whether to allow traffic
+  Automatically applies to all instances in the subnets it's associated with (therefore, you don't have to rely on users to specify the security group)
+
+  Each subnet in your VPC must be associated with a network ACL. If you don't explicitly associate a subnet with a network ACL, the subnet is automatically associated with the default network ACL.
+
+You can't apply resource-level permissions to any of the ec2:Describe* API actions, but you can apply resource-level permissions to some of the ec2:Delete* actions to control which resources users can delete.
+
+Flow Logs
+  You can create a flow log for a VPC, a subnet, or a network interface. If you create a flow log for a subnet or VPC, each network interface in the VPC or subnet is monitored.
+
+  A flow log record represents a network flow in your flow log. Each record captures the network flow for a specific 5-tuple, for a specific capture window.
+
+  An ACCEPT record for the originating ping that was allowed by both the network ACL and the security group, and therefore was allowed to reach your instance.
+
+  A REJECT record for the response ping that the network ACL denied.
+
+    CloudWatch
+      flow log data is published to a log group, and each network interface has a unique log stream in the log group.
+
+      IAM role that's associated with your flow log must have sufficient permissions to publish flow logs to the specified log group in CloudWatch Logs
+
+       ensure that your role has a trust relationship that allows the flow logs service to assume the role
+
+       Users must also have permissions to use the iam:PassRole action for the IAM role that's associated with the flow log
+
+    S3
+      When publishing to Amazon S3, flow log data is published to an existing Amazon S3 bucket that you specify
+
+      Flow logs collect flow log records, consolidate them into log files, and then publish the log files to the Amazon S3 bucket at 5-minute intervals. Each log file contains flow log records for the IP traffic recorded in the previous five minutes.
+
+      Log files are saved to the specified Amazon S3 bucket using a folder structure that is determined by the flow log's ID, Region, and the date on which they are created.
+
+  By default, IAM users do not have permission to work with flow logs. You can create an IAM user policy that grants users the permissions to create, describe, and delete flow logs
+
+Elastic Network Interface (referred to as a network interface in this documentation) is a virtual network interface that can include the following attributes:
+  a primary private IPv4 address
+  one or more secondary private IPv4 addresses
+  one Elastic IP address per private IPv4 address
+  one public IPv4 address, which can be auto-assigned to the network interface for eth0 when you launch an instance
+  one or more IPv6 addresses
+  one or more security groups
+  a MAC address
+  a source/destination check flag
+  a description
+
+A route table contains a set of rules, called routes, that are used to determine where network traffic is directed.
+
+A subnet can only be associated with one route table at a time, but you can associate multiple subnets with the same route table.
+
+The main route table controls the routing for all subnets that are not explicitly associated with any other route table. You can add, remove, and modify routes in the main route table.
+
+An egress-only Internet gateway is a horizontally scaled, redundant, and highly available VPC component that allows outbound communication over IPv6 from instances in your VPC to the Internet, and prevents the Internet from initiating an IPv6 connection with your instances.
+
+  IPv6 addresses are globally unique, and are therefore public by default
+
+  An egress-only Internet gateway is stateful: it forwards traffic from the instances in the subnet to the Internet or other AWS services, and then sends the response back to the instances.
+
+  You cannot associate a security group with an egress-only Internet gateway.
+
+  You can use a network ACL to control the traffic to and from the subnet for which the egress-only Internet gateway routes traffic.
+
+You can use a NAT device to enable instances in a private subnet to connect to the Internet or other AWS services, but prevent the Internet from initiating connections with the instances.
+
+  A NAT device forwards traffic from the instances in the private subnet to the Internet or other AWS services, and then sends the response back to the instances.
+
+  NAT Gateways
+    specify the public subnet in which the NAT gateway should reside
+
+    specify an Elastic IP address to associate with the NAT gateway when you create it
+
+    Each NAT gateway is created in a specific Availability Zone and implemented with redundancy in that zone
+
+    associate exactly one Elastic IP address with a NAT gateway.
+
+    You cannot associate a security group with a NAT gateway
+
+    A NAT gateway cannot be accessed by a ClassicLink connection associated with your VPC.
+
+  NAT Instances
+    enable instances in the private subnet to initiate outbound IPv4 traffic to the Internet or other AWS services, but prevent the instances from receiving inbound traffic initiated by someone on the Internet.
+
+    The NAT instance sends the traffic to the Internet gateway for the VPC
+
+Dynamic Host Configuration Protocol (DHCP) - provides a standard for passing configuration information to hosts on a TCP/IP network
