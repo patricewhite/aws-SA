@@ -1,6 +1,6 @@
 ###AWS Docs
 
-[S3](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/what-is-s3.html)
+[S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/Welcome.html)
 
 [EFS](https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html)
 

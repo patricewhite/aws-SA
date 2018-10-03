@@ -13,6 +13,7 @@ S3 - Simple Storage Service
             can read immediately after writing
         Eventual Consistency for overwrite PUTS and DELETES
             takes time for changes to take affect
+        If a PUT request is successful, your data is safely stored
     Key-Value Store
         key - name of Object
         value - data(sequence of bytes)
@@ -88,3 +89,40 @@ S3 - Simple Storage Service
     Server Access Logging
         provides detailed records for the requests that are made to a bucket.
         You must grant the Log Delivery group write permission on the target bucket by adding a grant entry in the bucket's access control list (ACL).
+    Mananging Access
+        Access policies you attach to your resources (buckets and objects) are referred to as resource-based policies
+            bucket policies
+                You want to manage cross-account permissions for all Amazon S3 permissions 
+            access control lists (ACLs)
+                object acl 
+                    If the AWS account that owns the object also owns the bucket, then it can write a bucket policy to manage the object permissions
+                    If the AWS account that owns the object wants to grant permission to a user in its account, it can use a user policy.
+                    An object ACL is the only way to manage access to objects not owned by the bucket owner
+                bucket acl 
+                    grant write permission to the Amazon S3 Log Delivery group to write access log objects to your bucket
+            user policy
+                Permission from the parent account
+                Permission from the resource owner
+        To perform a specific operation on a resource, an IAM user needs permission from both the parent AWS account to which it belongs and the AWS account that owns the resource.
+        User context – In the user context, the parent account to which the user belongs is the context authority.
+        Bucket context – In the bucket context, Amazon S3 evaluates policies owned by the AWS account that owns the bucket.
+        Object context – If the request is for an object, Amazon S3 evaluates the subset of policies owned by the object owner.
+    Amazon Resource Name (ARN) 
+    Objects 
+        pre-signed object urls 
+            owner can optionally share objects with others by creating a pre-signed URL, using their own security credentials, to grant time-limited permission to download the objects.
+            you must provide your security credentials, specify a bucket name, an object key, specify the HTTP method (GET to download the object) and expiration date and time
+            The pre-signed URLs are valid only for the specified duration.
+            Anyone who receives the pre-signed URL can then access the object.
+        Multipart Upload 
+            three-step process
+                initiate the upload
+                    When you send a request to initiate a multipart upload, Amazon S3 returns a response with an upload ID, which is a unique identifier for your multipart upload. You must include this upload ID whenever you upload parts, list the parts, complete an upload, or abort an upload.
+                upload the object parts
+                    When uploading a part, in addition to the upload ID, you must specify a part number
+                after you have uploaded all the parts, you complete the multipart upload
+            part sizes range from 5 MB to 5 GB, last part can be < 5 MB
+    API
+        Delete
+            The DELETE operation removes the null version (if there is one) of an object and inserts a delete marker, which becomes the current version of the object.
+            If there isn't a null version, Amazon S3 does not remove any objects.
