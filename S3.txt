@@ -62,3 +62,29 @@ S3 - Simple Storage Service
 
     min size of file is 0 bytes
     by default buckets and everything in them are private
+    Properties
+        Versioning
+        Server access logging
+        Static website hosting
+        Object-level logging
+        Tags
+        Transfer acceleration
+        Events
+            In charge of notifications
+        Requester Pays
+    Object-Level Logging with CloudTrail
+        To disable object-level logging for the bucket, you must go to the CloudTrail console and remove the bucket name from the trail's Data events.
+    Amazon Simple Notification Service (Amazon SNS) topic - A web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients
+        Logs API calls
+    Amazon Simple Queue Service (Amazon SQS) queue – Offers reliable and scalable hosted queues for storing messages as they travel between computer.
+    Lambda function – AWS Lambda is a compute service where you can upload your code and the service can run the code on your behalf using the AWS infrastructure.
+    The maximum size of a file that you can upload by using the Amazon S3 console is 78 GB
+    folder name is prefix for uploaded files
+        If you upload individual files and you have a folder open in the Amazon S3 console, when Amazon S3 uploads the files, it includes the name of the open folder as the prefix of the key names
+    metadata starting with prefix x-amz-meta- is treated as user-defined metadata
+    To undelete an object, you must delete the delete marker
+    CloudWatch
+        monitors metrics
+    Server Access Logging
+        provides detailed records for the requests that are made to a bucket.
+        You must grant the Log Delivery group write permission on the target bucket by adding a grant entry in the bucket's access control list (ACL).
