@@ -125,4 +125,4 @@ S3 - Simple Storage Service
     API
         Delete
             The DELETE operation removes the null version (if there is one) of an object and inserts a delete marker, which becomes the current version of the object.
-            If there isn't a null version, Amazon S3 does not remove any objects.
+            If there isn't a null version, Amazon S3 does not remove any obje
