@@ -1,0 +1,57 @@
+Elastic File System (EFS) - provides simple, scalable file storage
+    storage capacity is elastic, growing and shrinking automatically as you add and remove files, so your applications have the storage they need, when they need it
+    manages all the file storage infrastructure for you, meaning that you can avoid the complexity of deploying, patching, and maintaining complex file system configurations.
+    highly scalable, highly available, and highly durable
+    an grow to petabyte scale, drive high levels of throughput, and allow massively parallel access from Amazon EC2 instances to your data.
+    you create one or more mount targets in the VPC. 
+        A mount target provides an IP address for an NFSv4 endpoint at which you can mount an Amazon EFS file system
+        properties
+            mount target ID
+            subnet ID in which it is created
+            file system ID for which it is created
+            IP address at which the file system may be mounted
+            mount target state.
+    When designing your application for high availability and the ability to failover to other Availability Zones, keep in mind that the IP addresses and DNS for your mount targets in each Availability Zone are static
+    AWS VPN is not supported for accessing an Amazon EFS file system from an on-premises server
+    Data Consistency
+        open-after-close consistency
+            wites to file, saves, info is avalaible
+        write operations will be durably stored across Availability Zones 
+            An application performs a synchronous write operation
+            An application closes a file
+         Applications that perform synchronous data access and perform non-appending writes will have read-after-write consistency for data access
+    Creating resources
+        Elastic File System 
+            only requirement is that you create a token to ensure idempotent operation
+            permissions are required
+            you must specify VPC subnets.
+            choose a performance mode
+                General Purpose(use in most cases)
+                    provides low lantency access to EFS
+                Max I/O
+                    higher levels of aggregate throughput and operations per second with a tradeoff of slightly higher latencies for file operations
+        Mount Targets
+            The mount target security group acts as a virtual firewall that controls the traffic
+        Security Groups
+    Using File Systems
+        you can mount your Amazon EFS file system on any Amazon Elastic Compute Cloud (Amazon EC2) Linux-based instance
+        EFS File Sync to copy file from any file system to Amazon EFS
+        Network File System (NFS)
+        by default, only the root user (UID 0) has read-write-execute permissions.
+    Managing File Systems
+        If you create a file system that uses encryption at rest, data and metadata are encrypted at rest
+        If you delete a mount target, the operation forcibly breaks any mounts of the file system via the mount target being deleted, which might disrupt instances or applications using those mounts.
+        If you want to access the file system from another VPC, you must delete the mount targets from the current VPC and then create new mount targets in another VPC.
+        If the VPC has multiple subnets in an Availability Zone, you can create a mount target in only one of those subnets
+        VPC peering connection 
+            is a networking connection between two VPCs that enables you to route traffic between them using private Internet Protocol version 4 (IPv4) or Internet Protocol version 6 (IPv6) addresses. 
+        Domain Name System (DNS) name resolution for EFS mount points in peered VPCs is not supported. 
+            Use the IP address of the mount points in the corresponding Availability Zone to mount EFS file systems
+    Monitoring Tools
+        Amazon CloudWatch Alarms – Watch a single metric over a time period that you specify, and perform one or more actions based on the value of the metric relative to a given threshold over a number of time periods.
+        Amazon CloudWatch Logs – Monitor, store, and access your log files from AWS CloudTrail or other sources
+        Amazon CloudWatch Events – Match events and route them to one or more target functions or streams to make changes, capture state information, and take corrective action
+            enforces encryption at rest for your file system
+        AWS CloudTrail Log Monitoring – Share log files between accounts, monitor CloudTrail log files in real time by sending them to CloudWatch Logs, write log processing applications in Java, and validate that your log files have not changed after delivery by CloudTrai
+
+
