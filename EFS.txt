@@ -3,7 +3,7 @@ Elastic File System (EFS) - provides simple, scalable file storage
     manages all the file storage infrastructure for you, meaning that you can avoid the complexity of deploying, patching, and maintaining complex file system configurations.
     highly scalable, highly available, and highly durable
     an grow to petabyte scale, drive high levels of throughput, and allow massively parallel access from Amazon EC2 instances to your data.
-    you create one or more mount targets in the VPC. 
+    you create one or more mount targets in the VPC.
         A mount target provides an IP address for an NFSv4 endpoint at which you can mount an Amazon EFS file system
         properties
             mount target ID
@@ -16,12 +16,12 @@ Elastic File System (EFS) - provides simple, scalable file storage
     Data Consistency
         open-after-close consistency
             wites to file, saves, info is avalaible
-        write operations will be durably stored across Availability Zones 
+        write operations will be durably stored across Availability Zones
             An application performs a synchronous write operation
             An application closes a file
          Applications that perform synchronous data access and perform non-appending writes will have read-after-write consistency for data access
     Creating resources
-        Elastic File System 
+        Elastic File System
             only requirement is that you create a token to ensure idempotent operation
             permissions are required
             you must specify VPC subnets.
@@ -43,9 +43,9 @@ Elastic File System (EFS) - provides simple, scalable file storage
         If you delete a mount target, the operation forcibly breaks any mounts of the file system via the mount target being deleted, which might disrupt instances or applications using those mounts.
         If you want to access the file system from another VPC, you must delete the mount targets from the current VPC and then create new mount targets in another VPC.
         If the VPC has multiple subnets in an Availability Zone, you can create a mount target in only one of those subnets
-        VPC peering connection 
-            is a networking connection between two VPCs that enables you to route traffic between them using private Internet Protocol version 4 (IPv4) or Internet Protocol version 6 (IPv6) addresses. 
-        Domain Name System (DNS) name resolution for EFS mount points in peered VPCs is not supported. 
+        VPC peering connection
+            is a networking connection between two VPCs that enables you to route traffic between them using private Internet Protocol version 4 (IPv4) or Internet Protocol version 6 (IPv6) addresses.
+        Domain Name System (DNS) name resolution for EFS mount points in peered VPCs is not supported.
             Use the IP address of the mount points in the corresponding Availability Zone to mount EFS file systems
     Monitoring Tools
         Amazon CloudWatch Alarms – Watch a single metric over a time period that you specify, and perform one or more actions based on the value of the metric relative to a given threshold over a number of time periods.
@@ -53,5 +53,42 @@ Elastic File System (EFS) - provides simple, scalable file storage
         Amazon CloudWatch Events – Match events and route them to one or more target functions or streams to make changes, capture state information, and take corrective action
             enforces encryption at rest for your file system
         AWS CloudTrail Log Monitoring – Share log files between accounts, monitor CloudTrail log files in real time by sending them to CloudWatch Logs, write log processing applications in Java, and validate that your log files have not changed after delivery by CloudTrai
-
-
+        Resource – In a policy, you use an Amazon
+    Policy Elements
+        Resource Name (ARN) to identify the resource to which the policy applies. For more information, see Amazon Elastic File System Resources and Operations.
+        Action – You use action keywords to identify resource operations that you want to allow or deny. For example, depending on the specified Effect, elasticfilesystem:CreateFileSystem either allows or denies the user permissions to perform the Amazon Elastic File System CreateFileSystem operation.
+        Effect – You specify the effect when the user requests the specific action—this can be either allow or deny. If you don't explicitly grant access to (allow) a resource, access is implicitly denied. You can also explicitly deny access to a resource, which you might do to make sure that a user cannot access it, even if a different policy grants access.
+        Principal – In identity-based policies (IAM policies), the user that the policy is attached to is the implicit principal. For resource-based policies, you specify the user, account, service, or other entity that you want to receive permissions (applies to resource-based policies only). Amazon EFS doesn't support resource-based policies.
+    EFS API
+        CreateFileSystem
+            new, empty file system. The operation requires a creation token in the request that Amazon EFS uses to ensure idempotent creation
+            response
+              {
+               "CreationTime": number,
+               "CreationToken": "string",
+               "Encrypted": boolean,
+               "FileSystemId": "string",
+               "KmsKeyId": "string",
+               "LifeCycleState": "string",
+               "Name": "string",
+               "NumberOfMountTargets": number,
+               "OwnerId": "string",
+               "PerformanceMode": "string",
+               "ProvisionedThroughputInMibps": number,
+               "SizeInBytes": {
+                  "Timestamp": number,
+                  "Value": number
+               },
+               "ThroughputMode": "string"
+              }
+        CreateMountTarget
+        CreateTags
+        DeleteFileSystem
+        DeleteMountTarget
+        DeleteTags
+        DescribeFileSystems
+        DescribeMountTargets
+        DescribeMountTargetSecurityGroups
+        DescribeTags
+        ModifyMountTargetSecurityGroups
+        UpdateFileSystem
