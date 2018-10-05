@@ -1,0 +1,51 @@
+API Gateway is an AWS service that enables developers to create, publish, maintain, monitor, and secure APIs at any scale.
+    Users
+        app developers
+        API developers
+    API Gateway lets you create, configure, and host a RESTful API to enable applications to access the AWS Cloud.
+    Concepts
+        Gateway API
+            A collection of resources and methods that are integrated with backend HTTP endpoints, Lambda functions, or other AWS services.
+        API deployment
+            A point-in-time snapshot of your API Gateway API resources and methods
+        API developer
+            Your AWS account that owns an API Gateway deployment
+        API endpoints
+            Host names APIs in API Gateway, which are deployed to a specific region
+            Format: {rest-api-id}.execute-api.{region}.amazonaws.com
+            Types of endpoints
+                Edge-optimized API endpoint
+                    default host name of an API Gateway API that is deployed to the specified region while using a CloudFront distribution to facilitate client access typically from across AWS regions
+                Regional API endpoint
+                    host name of an API that is deployed to the specified region and intended to serve clients, such as EC2 instances, in the same AWS region.
+                Private API endpoint
+                    Allows a client to securely access private API resources inside a VPC
+        API key
+          string that API Gateway uses to identify an app developer who uses your API
+        API owner
+        API stage
+            reference to a lifecycle state of your API
+        App developer
+            An app creator who may or may not have an AWS account and interacts with the API that you, the API developer, have deployed
+            API owner
+        Integration request
+            The internal interface of an API method in API Gateway, in which you map the parameters and body of a method request to the formats required by the backend.
+        Integration response
+            The internal interface of an API method in API Gateway, in which you map the status codes, headers, and payload that are received from the backend to the response format that is returned to a client app.
+        Mapping template
+            Scripts in Velocity Template Language (VTL) to transform a request body from the frontend data format to the backend data format, or to transform a response body from the backend data format to the frontend data format.
+        Method request
+            The public interface of an API method in API Gateway that defines the parameters and body that an app developer must send in the requests to access the backend through the API.
+        Method response
+            The public interface of an API that defines the status codes, headers, and body models that an app developer should expect from API Gateway.
+        Model
+            Data schema specifying the data structure of a request or response payload.
+        Private API
+            An API that is exposed through interface VPC endpoints and isolated from the public internet
+        Private integration
+            An API Gateway integration type for a client to access resources inside a customer's VPC through a private API endpoint without exposing the resources to the public internet.
+        Proxy integration
+            A simplified API Gateway integration configuration.
+        Usage plan
+            A usage plan provides selected API clients with access to one or more deployed APIs.
+    

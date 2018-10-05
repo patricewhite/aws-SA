@@ -1,0 +1,56 @@
+Lambda is a compute service that lets you run code without provisioning or managing servers.
+    You pay only for the compute time you consume - there is no charge when your code is not running.
+    runs your code on a high-availability compute infrastructure and performs all of the administration of the compute resources, including server and operating system maintenance, capacity provisioning and automatic scaling, code monitoring and logging.
+    Uses
+        response to events
+        response to HTTP requests using Amazon API Gateway;
+        invoke your code using API calls made using AWS SDKs
+    build serverless applications composed of functions that are triggered by events and automatically deploy them using AWS CodePipeline and AWS CodeBuild.
+    Lifecycle Stages
+        Authoring code for your Lambda function
+            You can author your Lambda function code in the languages that are supported by AWS Lambda.
+        Uploading code and creating Lambda functions
+            Creating a Deployment Package
+                Organizing Code and Dependencies
+            Uploading a Deployment Package
+                Creating a Lambda Function
+            Testing a Lambda Function
+        Monitoring and troubleshooting
+            AWS Lambda automatically monitors functions on your behalf, reporting metrics through Amazon CloudWatch
+    Programming Model
+        Handler
+            Handler is the function AWS Lambda calls to start execution of your Lambda function.
+        The context object and how it interacts with Lambda at runtime
+            AWS Lambda also passes a  context  object to the handler function, as the second parameter.
+            for languages such as Node.js, there is an asynchronous platform that uses callbacks. AWS Lambda provides additional methods on this context object
+        Logging
+            Your Lambda function can contain logging statements.
+        Exceptions
+            Your Lambda function needs to communicate the result of the function execution to AWS Lambda.
+        Your Lambda function code must be written in a stateless style, and have no affinity with the underlying compute infrastructure.
+        Your code should expect local file system access, child processes, and similar artifacts to be limited to the lifetime of the request.
+        Persistent state should be stored in Amazon S3, Amazon DynamoDB, or another cloud storage service.
+    Creating Deployment Package
+        all files in package must have read/write permissions to owners, read to group and global.
+        same permissions for directories.
+    Configuration
+        Memory
+            Specify the amount of memory you want to allocate for your Lambda function.
+        Timeout
+            You pay for the AWS resources that are used to run your Lambda function.
+        Execution role
+            This is the role that AWS Lambda assumes when it executes the Lambda function on your behalf.
+        Handler name
+            The handler method is the entry point that executes your Lambda function code and any event source dependencies that you have included as part of your Lambda function.
+    You can invoke a Lambda function synchronously either by calling the Invoke operation or by using an AWS SDK in your preferred runtime.
+    Environment Variables
+        Environment variables for Lambda functions enable you to dynamically pass settings to your function code and libraries, without making changes to your code.
+        reference the database names
+        reference connection information
+        reference table names
+        set the value for the function based on the stage in which it’s executing while your function code remains unchanged
+        no limit to the number of environment variables you can create as long as the total size of the set does not exceed 4 KB
+        When you create or update Lambda functions that use environment variables, AWS Lambda encrypts them using the AWS Key Management Service.
+        sensitive information
+            providing encryption helpers that leverage AWS Key Management Service to store that sensitive information as Ciphertext. T
+        
