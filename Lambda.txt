@@ -1,56 +1,120 @@
 Lambda is a compute service that lets you run code without provisioning or managing servers.
-    You pay only for the compute time you consume - there is no charge when your code is not running.
-    runs your code on a high-availability compute infrastructure and performs all of the administration of the compute resources, including server and operating system maintenance, capacity provisioning and automatic scaling, code monitoring and logging.
-    Uses
-        response to events
-        response to HTTP requests using Amazon API Gateway;
-        invoke your code using API calls made using AWS SDKs
-    build serverless applications composed of functions that are triggered by events and automatically deploy them using AWS CodePipeline and AWS CodeBuild.
-    Lifecycle Stages
-        Authoring code for your Lambda function
-            You can author your Lambda function code in the languages that are supported by AWS Lambda.
-        Uploading code and creating Lambda functions
-            Creating a Deployment Package
-                Organizing Code and Dependencies
-            Uploading a Deployment Package
-                Creating a Lambda Function
-            Testing a Lambda Function
-        Monitoring and troubleshooting
-            AWS Lambda automatically monitors functions on your behalf, reporting metrics through Amazon CloudWatch
-    Programming Model
-        Handler
-            Handler is the function AWS Lambda calls to start execution of your Lambda function.
-        The context object and how it interacts with Lambda at runtime
-            AWS Lambda also passes a  context  object to the handler function, as the second parameter.
-            for languages such as Node.js, there is an asynchronous platform that uses callbacks. AWS Lambda provides additional methods on this context object
-        Logging
-            Your Lambda function can contain logging statements.
-        Exceptions
-            Your Lambda function needs to communicate the result of the function execution to AWS Lambda.
-        Your Lambda function code must be written in a stateless style, and have no affinity with the underlying compute infrastructure.
-        Your code should expect local file system access, child processes, and similar artifacts to be limited to the lifetime of the request.
-        Persistent state should be stored in Amazon S3, Amazon DynamoDB, or another cloud storage service.
-    Creating Deployment Package
-        all files in package must have read/write permissions to owners, read to group and global.
-        same permissions for directories.
-    Configuration
-        Memory
-            Specify the amount of memory you want to allocate for your Lambda function.
-        Timeout
-            You pay for the AWS resources that are used to run your Lambda function.
-        Execution role
-            This is the role that AWS Lambda assumes when it executes the Lambda function on your behalf.
-        Handler name
-            The handler method is the entry point that executes your Lambda function code and any event source dependencies that you have included as part of your Lambda function.
-    You can invoke a Lambda function synchronously either by calling the Invoke operation or by using an AWS SDK in your preferred runtime.
-    Environment Variables
-        Environment variables for Lambda functions enable you to dynamically pass settings to your function code and libraries, without making changes to your code.
-        reference the database names
-        reference connection information
-        reference table names
-        set the value for the function based on the stage in which it’s executing while your function code remains unchanged
-        no limit to the number of environment variables you can create as long as the total size of the set does not exceed 4 KB
-        When you create or update Lambda functions that use environment variables, AWS Lambda encrypts them using the AWS Key Management Service.
-        sensitive information
-            providing encryption helpers that leverage AWS Key Management Service to store that sensitive information as Ciphertext. T
-        
+    Lambda Functions
+        You pay only for the compute time you consume - there is no charge when your code is not running.
+        runs your code on a high-availability compute infrastructure and performs all of the administration of the compute resources, including server and operating system maintenance, capacity provisioning and automatic scaling, code monitoring and logging.
+        Uses
+            response to events
+            response to HTTP requests using Amazon API Gateway;
+            invoke your code using API calls made using AWS SDKs
+        build serverless applications composed of functions that are triggered by events and automatically deploy them using AWS CodePipeline and AWS CodeBuild.
+        Lifecycle Stages
+            Authoring code for your Lambda function
+                You can author your Lambda function code in the languages that are supported by AWS Lambda.
+            Uploading code and creating Lambda functions
+                Creating a Deployment Package
+                    Organizing Code and Dependencies
+                Uploading a Deployment Package
+                    Creating a Lambda Function
+                Testing a Lambda Function
+            Monitoring and troubleshooting
+                AWS Lambda automatically monitors functions on your behalf, reporting metrics through Amazon CloudWatch
+        Programming Model
+            Handler
+                Handler is the function AWS Lambda calls to start execution of your Lambda function.
+            The context object and how it interacts with Lambda at runtime
+                AWS Lambda also passes a  context  object to the handler function, as the second parameter.
+                for languages such as Node.js, there is an asynchronous platform that uses callbacks. AWS Lambda provides additional methods on this context object
+            Logging
+                Your Lambda function can contain logging statements.
+            Exceptions
+                Your Lambda function needs to communicate the result of the function execution to AWS Lambda.
+            Your Lambda function code must be written in a stateless style, and have no affinity with the underlying compute infrastructure.
+            Your code should expect local file system access, child processes, and similar artifacts to be limited to the lifetime of the request.
+            Persistent state should be stored in Amazon S3, Amazon DynamoDB, or another cloud storage service.
+        Creating Deployment Package
+            all files in package must have read/write permissions to owners, read to group and global.
+            same permissions for directories.
+        Configuration
+            Memory
+                Specify the amount of memory you want to allocate for your Lambda function.
+            Timeout
+                You pay for the AWS resources that are used to run your Lambda function.
+            Execution role
+                This is the role that AWS Lambda assumes when it executes the Lambda function on your behalf.
+            Handler name
+                The handler method is the entry point that executes your Lambda function code and any event source dependencies that you have included as part of your Lambda function.
+        You can invoke a Lambda function synchronously either by calling the Invoke operation or by using an AWS SDK in your preferred runtime.
+        Environment Variables
+            Environment variables for Lambda functions enable you to dynamically pass settings to your function code and libraries, without making changes to your code.
+            reference the database names
+            reference connection information
+            reference table names
+            set the value for the function based on the stage in which it’s executing while your function code remains unchanged
+            no limit to the number of environment variables you can create as long as the total size of the set does not exceed 4 KB
+            When you create or update Lambda functions that use environment variables, AWS Lambda encrypts them using the AWS Key Management Service.
+            sensitive information
+                providing encryption helpers that leverage AWS Key Management Service to store that sensitive information as Ciphertext.
+        Versioning
+            Each Lambda function version has a unique Amazon Resource Name (ARN). After you publish a version, it is immutable (that is, it can't be changed).
+            When you create a Lambda function, there is only one version—the $LATEST version.
+            2 options for Updating Lambda function code and Configuration
+                Publish a version in the same update code request – Use the UpdateFunctionCode API operation (recommended).
+                First update the code, and then explicitly publish a version – Use the PublishVersion API operation.
+            2 options for deleting lambda function code
+                Delete a specific version – You can delete a Lambda function version by specifying the version you want to delete in your DeleteFunction request.
+                Delete the entire Lambda function (all of its versions and aliases) – To delete the Lambda function and all of its versions, don't specify any version in your DeleteFunction request.
+            2 options for aliases
+            Easier support for promotion of new versions of Lambda functions and rollback when needed
+                After initially creating a Lambda function (the $LATEST version), you can publish a version 1 of it. By creating an alias named PROD that points to version 1, you can now use the PROD alias to invoke version 1 of the Lambda function.Now, you can update the code (the $LATEST version) with all of your improvements, and then publish another stable and improved version (version 2). You can promote version 2 to production by remapping the PROD alias so that it points to version 2. If you find something wrong, you can easily roll back the production version to version 1 by remapping the PROD alias so that it points to version 1.
+            Simplify management of event source mappings
+                Instead of using Amazon Resource Names (ARNs) for Lambda function in event source mappings, you can use an alias ARN. This approach means that you don't need to update your event source mappings when you promote a new version or roll back to a previous version.
+            API's for managing Versioning
+                PublishVersion
+                ListVersionsByFunction
+                CreateAlias
+                UpdateAlias
+                DeleteAlias
+                GetAlias
+                ListAliases
+            By default, an alias points to a single Lambda function version.
+            you can implement the routing-config parameter of the Lambda alias that allows you to point to two different versions of the Lambda function and dictate what percentage of incoming traffic is sent to each version.
+            You can point an alias to a maximum of two Lambda function versions.
+                Both versions should have the same Dead Letter Queues configuration (or no DLQ configuration).
+                Both versions should have the same IAM execution role.
+                When pointing an alias to more than one version, the alias cannot point to $LATEST.
+        Lambda does not enforce any restrictions on your function logic – if you can code for it, you can run it within a Lambda function.
+        By default, your service or API must be accessible over the public internet for AWS Lambda to access it.
+        VPC
+            AWS Lambda uses the VPC information you provide to set up ENIs that allow your Lambda function to access VPC resources
+            If your Lambda function needs Internet access, do not attach it to a public subnet or to a private subnet without Internet access. Instead, attach it only to private subnets with Internet access through a NAT instance or an Amazon VPC NAT gateway.
+            Your Lambda function automatically scales based on the number of events it processes
+    Invoking lambda functions
+    core components are Lambda functions and event sources
+    event source is the AWS service or custom application that publishes events
+    Lambda function is the custom code that processes the events
+    Using the bucket notification feature, you can configure an event source mapping that directs Amazon S3 to invoke a Lambda function when a specific type of event occurs
+    For poll-based event sources, AWS Lambda polls the source and then invokes the Lambda function when records are detected on that source.
+        Invocation Types
+            supports synchronous and asynchronous invocation of a Lambda function
+            You can control the invocation type only when you invoke a Lambda function (referred to as on-demand invocation)
+                Your custom application invokes a Lambda function.
+                You manually invoke a Lambda function (for example, using the AWS CLI) for testing purposes
+            When you are using AWS services as event sources, the invocation type is predetermined for each service
+        Retry behavior
+            A Lambda function can fail for any of the following reasons:
+                The function times out while trying to reach an endpoint.
+                The function fails to successfully parse input data.
+                The function experiences resource constraints, such as out-of-memory errors or other timeouts.
+            Event sources that aren't stream-based – Some of these event sources are set up to invoke a Lambda function synchronously and others invoke it asynchronously.
+                Synchronous invocation – The invoking application receives a 429 error and is responsible for retries.
+                Asynchronous invocation – Asynchronous events are queued before being used to invoke the Lambda function. If AWS Lambda is unable to fully process the event, it will automatically retry the invocation twice, with delays between retries.
+            Poll-based (or pull model) event sources that are stream-based: These consist of Kinesis Data Streams or DynamoDB. When a Lambda function invocation fails, AWS Lambda attempts to process the erring batch of records until the time the data expires, which can be up to seven days.
+            Poll-based event sources that are not stream-based: This consists of Amazon Simple Queue Service. If you configure an Amazon SQS queue as an event source, AWS Lambda will poll a batch of records in the queue and invoke your Lambda function. If the invocation fails or times out, every message in the batch will be returned to the queue, and each will be available for processing once the Visibility Timeout period expires.
+        Scaling Behavior
+            Request rate refers to the rate at which your Lambda function is invoked. For all services except the stream-based services, the request rate is the rate at which the event sources generate the events.
+            AWS Lambda will dynamically scale capacity in response to increased traffic, subject to your account's Account Level Concurrent Execution Limit. To handle bursts in traffic, Lambda automatically increases a function's capacity when it is under load.
+            If the default Immediate Concurrency Increase value is not sufficient to accommodate the traffic surge, AWS Lambda will continue to increase the number of concurrent function executions by 500 per minute until your account safety limit has been reached or the number of concurrently executing functions is sufficient to successfully process the increased load.
+        Dead Letter Queues
+            If unsure why asynchronously invoked lambda function fails, use Dead Letter Queues (DLQ) to direct unprocessed events to an Amazon SQS queue or an Amazon SNS topic to analyze the failure.
+            Functions that don't specify a DLQ will discard events after they have exhausted their retries.
+            The payload written to the DLQ target ARN is the original event payload with no modifications to the message body.
